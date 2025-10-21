@@ -306,11 +306,11 @@ get_tun0_ip() {
     if [[ -z "$TUN0_IP" ]] && command -v ifconfig >/dev/null 2>&1; then
         TUN0_IP=$(ifconfig tun0 2>/dev/null | grep -oP 'inet \K[\d.]+' | head -1 || echo "")
     fi
-
+    # if no tun0 ip is found just fallback to host it self
     if [[ -z "$TUN0_IP" ]]; then
         log_error "Could not determine TUN0 IP address"
-        log_error "Ensure VPN connection is active and tun0 interface exists, or provide IP with -tun0 argument"
-        return 1
+        #log_error "Ensure VPN connection is active and tun0 interface exists, or provide IP with -tun0 argument"
+        return 0
     fi
 
     log_debug "Auto-detected TUN0 IP: $TUN0_IP"
@@ -462,6 +462,10 @@ EOF
     
     # Upload files using impacket-smbclient (suppress all output)
     if ! impacket-smbclient "$USERNAME:$PASSWORD@$TARGET_IP" -inputfile "$upload_commands" >/dev/null 2>&1; then
+        log_error "Failed to upload files via SMB"
+        rm -f "$upload_commands"
+        return 1
+    elif ! smbclient.py "$USERNAME:$PASSWORD@$TARGET_IP" -inputfile "$upload_commands" >/dev/null 2>&1; then
         log_error "Failed to upload files via SMB"
         rm -f "$upload_commands"
         return 1

@@ -306,7 +306,7 @@ get_tun0_ip() {
     if [[ -z "$TUN0_IP" ]] && command -v ifconfig >/dev/null 2>&1; then
         TUN0_IP=$(ifconfig tun0 2>/dev/null | grep -oP 'inet \K[\d.]+' | head -1 || echo "")
     fi
-    # if no tun0 ip is found just fallback to host it self
+    # if no tun0 ip is found just fallback to host it  (custom IP or any provided IP accessible)
     if [[ -z "$TUN0_IP" ]]; then
         log_error "Could not determine TUN0 IP address"
         #log_error "Ensure VPN connection is active and tun0 interface exists, or provide IP with -tun0 argument"

@@ -16,7 +16,7 @@ set -euo pipefail
 readonly SCRIPT_NAME="${0##*/}"
 readonly ERROR_LOG=$(mktemp)
 readonly ELK_PATH="/opt/elk-installer"
-readonly GIT_REPO="https://github.com/kalic-xing/elk-installer.git"
+readonly GIT_REPO="https://github.com/tahaafarooq/elk-installer.git"
 readonly MIN_RAM_MB=3890
 
 

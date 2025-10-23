@@ -28,7 +28,7 @@ This script automates the setup of an ELK (Elasticsearch, Logstash, Kibana) stac
 Deploy the complete ELK stack with a single command:
 
 ```bash
-sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/kalic-xing/elk-installer/main/install.sh)"
+sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/tahaafarooq/elk-installer/main/install.sh)"
 ```
 
 ### Installation Options

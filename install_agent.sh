@@ -224,7 +224,7 @@ validate_prerequisites() {
     local required_commands=("curl" "docker")
     
     if [[ "$TARGET_ARCH" == "Windows" ]]; then
-        required_commands+=("impacket-smbclient" "nxc")
+        required_commands+=("smbclient.py" "nxc")
     else
         required_commands+=("sshpass" "ssh" "scp")
     fi
@@ -461,11 +461,11 @@ EOF
     log_debug "Upload commands file: $upload_commands"
     
     # Upload files using impacket-smbclient (suppress all output)
-    if ! impacket-smbclient "$USERNAME:$PASSWORD@$TARGET_IP" -inputfile "$upload_commands" >/dev/null 2>&1; then
-        log_error "Failed to upload files via SMB"
-        rm -f "$upload_commands"
-        return 1
-    elif ! smbclient.py "$USERNAME:$PASSWORD@$TARGET_IP" -inputfile "$upload_commands" >/dev/null 2>&1; then
+    #if ! impacket-smbclient "$USERNAME:$PASSWORD@$TARGET_IP" -inputfile "$upload_commands" >/dev/null 2>&1; then
+    #    log_error "Failed to upload files via SMB"
+    #    rm -f "$upload_commands"
+    #    return 0
+    if ! smbclient.py "$USERNAME:$PASSWORD@$TARGET_IP" -inputfile "$upload_commands" >/dev/null 2>&1; then
         log_error "Failed to upload files via SMB"
         rm -f "$upload_commands"
         return 1
